@@ -1,5 +1,9 @@
 package gui;
 
-public class Map {
+import javax.swing.JFrame;
 
+import otros.IConstants;
+
+public class Map extends JFrame implements IConstants{
+	
 }
