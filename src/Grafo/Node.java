@@ -8,7 +8,7 @@ public class Node<T> {
 
     private ArrayList<Node<T>> arches;
     private Node<T> nextNode;
-    private String searchKey;
+    private Object searchKey;
     private T element;
 
     public Node(String pSearchKey, T pElement) {
@@ -38,7 +38,7 @@ public class Node<T> {
         return arches;
     }
 
-    public String getSearchKey() {
+    public Object getSearchKey() {
         return searchKey;
     }
 
