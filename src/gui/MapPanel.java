@@ -101,7 +101,9 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 					inRange = true;
 					puntos.add(puntoActual);
 					arcos.add(new Arco(currentPoint,lastPoint));
-					//break;
+					lastPoint = currentPoint;
+					repaint();
+					return;
 				}
 			}
 			currentPoint = new Point(pEvent.getX(), pEvent.getY());
