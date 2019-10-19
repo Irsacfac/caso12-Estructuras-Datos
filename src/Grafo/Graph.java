@@ -37,25 +37,51 @@ public class Graph<T> {
         //TODO
     }
 
-    public void pathFrom(Node<T> pNodeA, Node<T> pNodeB){
-        //TODO
-        ArrayList<Node<T>> path = new ArrayList<>();
-        ArrayList<Node<T>> auxiliarQueue = new ArrayList<>();
-        auxiliarQueue.add(pNodeA);
+    public ArrayList<Node<T>> pathFrom(Node<T> pNodeA, Node<T> pNodeB){
 
+        ArrayList<Node<T>> path;
+        ArrayList<Node<T>> auxiliarQueue = new ArrayList<>();
+
+        auxiliarQueue.add(pNodeA);
         Node<T> current = pNodeA;
+
         while(current != pNodeB){
             current = auxiliarQueue.get(0);
             auxiliarQueue = enqueueArches(current, auxiliarQueue);
+            auxiliarQueue.get(0).setVisited(false);
+            auxiliarQueue.remove(0);
         }
-
-
+        path = getPath(current, pNodeA);
+        return path;
     }
 
-    public ArrayList<Node<T>> enqueueArches(Node<T> pNode, ArrayList<Node<T>> queue){
+    private ArrayList<Node<T>> enqueueArches(Node<T> pNode, ArrayList<Node<T>> queue){
         for (Node<T> arch: pNode.getArches()){
-            queue.add(arch);
+            if(!arch.isVisited()){
+                arch.setPrevNode(pNode);
+                queue.add(arch);
+                arch.setVisited(true);
+            }
         }
         return queue;
     }
+
+    private ArrayList<Node<T>> getPath(Node<T> pNodeA, Node<T> pNodeB){
+        ArrayList<Node<T>> path = new ArrayList<>();
+        Node<T> previousNode = pNodeA.getPrevNode();
+        path.add(pNodeA);
+
+        if(previousNode == pNodeB){
+            path.add(previousNode);
+        } else{
+            while(previousNode != pNodeB){
+                path.add(previousNode);
+                previousNode = previousNode.getPrevNode();
+            }
+        }
+
+        return path;
+    }
+
+
 }
