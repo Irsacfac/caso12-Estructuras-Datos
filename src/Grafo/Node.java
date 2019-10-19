@@ -7,22 +7,24 @@ import java.util.ArrayList;
 public class Node<T> {
 
     private ArrayList<Node<T>> arches;
-    private Node<T> nextNode;
+    private Node<T> prevNode;
+    private boolean visited;
     private T element;
 
     public Node(T pElement) {
 
         element = pElement;
         arches = new ArrayList<>();
-        nextNode = null;
+        visited = false;
+        prevNode = null;
     }
 
-    public Node<T> getNextNode() {
-        return nextNode;
+    public Node<T> getPrevNode() {
+        return prevNode;
     }
 
-    public void setNextNode(Node<T> nextNode) {
-        this.nextNode = nextNode;
+    public void setPrevNode(Node<T> prevNode) {
+        this.prevNode = prevNode;
     }
 
     public void addArch(Node<T> pNewArch){
