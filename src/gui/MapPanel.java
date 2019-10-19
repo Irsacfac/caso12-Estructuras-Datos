@@ -8,33 +8,38 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Grafo.Graph;
+import Grafo.Node;
 import otros.IConstants;
 
 public class MapPanel extends JPanel implements IConstants, MouseListener, ActionListener {
-	private int currentX;
-	private int currentY;
-	private int lastX;
-	private int lastY;
-	private int cantNodos;
+	private Point currentPoint;
+	private Point lastPoint;
+	private ArrayList<Point> puntos;
+	ArrayList<Arco> arcos;
     private boolean paintCircle;
+    private boolean inRange;
     private boolean recorrer;
-    private Image imageBuffer;
+    //private Image imageBuffer;
     private URL fondo;
     private Image map;
+    private Graph miGrafo;
+   	private Node nodoAnterior;
 	
 	public MapPanel() {
 		super();
-		//this.setSize(PANEL_ANCHURA-PANEL_ANCHURA, PANTALLA_ALTURA);
 		this.setBounds(PANEL_ANCHURA, 0, PANTALLA_ANCHURA, PANTALLA_ALTURA);
 		this.addMouseListener(this);
 		fondo = this.getClass().getResource("/gui/ciudad.png");
 		map = new ImageIcon(fondo).getImage();
-		//pVentana.getContentPane().add(this);
+		puntos = new ArrayList<>();
+		arcos = new ArrayList<>();
 	}
 	
 	
@@ -45,34 +50,68 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 	}
 	
 	public void paint(Graphics g) {
-    	if (imageBuffer == null) {
-    		imageBuffer = this.createImage(PANTALLA_ANCHURA, PANTALLA_ALTURA);
-    	}
+		g.drawImage(map, 0, 0, null);
+
+		Point<Node> puntoActual;
+		for (int punto = 0; punto < puntos.size(); punto++) {
+			puntoActual = puntos.get(punto);
+			g.fillOval(puntoActual.getEjeX()-MOUSE_ADJUSTMENT, puntoActual.getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
+			
+		}
+		Arco<Node> arcoActual;
+		for (int arco = 0; arco < arcos.size(); arco++) {
+			arcoActual = arcos.get(arco);
+			g.drawLine(arcoActual.getPuntoA().getEjeX(), arcoActual.getPuntoA().getEjeY(), arcoActual.getPuntoB().getEjeX(), arcoActual.getPuntoB().getEjeY());
+		}
+		
+		/*if(puntos.size() != 0) {
+			if(inRange){
+					g.drawLine(lastPoint.getEjeX(), lastPoint.getEjeY(), currentPoint.getEjeX(), currentPoint.getEjeY());
+					paintCircle = false;
+					lastPoint = currentPoint;
+					inRange = false;
+					return;
+			}
+			g.drawLine(lastPoint.getEjeX(), lastPoint.getEjeY(), currentPoint.getEjeX(), currentPoint.getEjeY());
+		}
     	if (paintCircle) {
-    		Graphics g2 = imageBuffer.getGraphics();
-    		if(cantNodos!=0) {
-    			g2.drawLine(lastX, lastY, currentX, currentY);
-    		}
-			g2.fillOval(currentX-MOUSE_ADJUSTMENT, currentY-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
-			lastX = currentX;
-			lastY = currentY;
-			cantNodos++;
+			g.fillOval(currentPoint.getEjeX()-MOUSE_ADJUSTMENT, currentPoint.getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
+			lastPoint = currentPoint;
+			puntos.add(currentPoint);
 			paintCircle = false;
     	}
-    	//super.paint(g);
     	if(recorrer) {
     		
     	}
-    	g.drawImage(imageBuffer, 0, 0, null);
+    	//g.drawImage(imageBuffer, 0, 0, null);*/
     }
 	
 
 	@Override
 	public void mouseClicked(MouseEvent pEvent) {
 		// TODO Auto-generated method stub
-		currentX = pEvent.getX();
-        currentY = pEvent.getY();
-        paintCircle = true;
+		Point puntoActual;
+		boolean existe = false;
+		if(puntos.size() != 0) {
+			for (int punto = 0; punto < puntos.size(); punto++) {
+				puntoActual = puntos.get(punto);
+				existe = puntoActual.inRange(pEvent.getX(), pEvent.getY());
+				if(existe) {
+					currentPoint = puntoActual;
+					inRange = true;
+					puntos.add(puntoActual);
+					arcos.add(new Arco(currentPoint,lastPoint));
+					//break;
+				}
+			}
+			currentPoint = new Point(pEvent.getX(), pEvent.getY());
+			arcos.add(new Arco(currentPoint,lastPoint));
+		}
+		if(!existe) {
+			currentPoint = new Point(pEvent.getX(), pEvent.getY());
+			puntos.add(currentPoint);
+		}
+		lastPoint = currentPoint;
         repaint();
 	}
 
