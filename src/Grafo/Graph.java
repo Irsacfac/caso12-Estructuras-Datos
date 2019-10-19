@@ -8,8 +8,10 @@ public class Graph<T> {
     Node<T> end;
 
     public Graph() {
+
         start = null;
         end = null;
+
     }
 
     public void addNode(Node<T> pNewNode){
@@ -20,7 +22,7 @@ public class Graph<T> {
 
     }
 
-    public void addArch(Object pNodekeyA, Object pNodekeyB){
+    public void addArch(Node<T> pNodeOne, Node<T> pNodeB){
 
     }
 
@@ -32,7 +34,7 @@ public class Graph<T> {
 
     }
 
-    public void pathFrom(Object pNodekeyA, Object pNodekeyB){
+    public void pathFrom(Node<T> pNodeA, Node<T> pNodeB){
 
     }
 
