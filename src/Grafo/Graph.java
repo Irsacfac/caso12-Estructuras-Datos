@@ -5,6 +5,7 @@ import java.util.ArrayList;
 //This design is implemented with an adyacence list.
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Graph<T> {
 
@@ -14,12 +15,13 @@ public class Graph<T> {
         nodes = new ArrayList<>();
     }
 
-    public void addNode(T pNewNode){
-    	Node pNodo = new Node<T>(pNewNode);
+    public void addNode(T pNewNodeElement){
+    	Node<T> NewNodo = new Node<T>(pNewNodeElement);
+    	nodes.add(NewNodo);
     }
 
     public void deleteNode(Node<T> pToDelete){
-    	nodos.remove(pToDelete);
+    	nodes.remove(pToDelete);
     }
 
     public void addArch(Node<T> pNodeOne, Node<T> pNodeTwo){
@@ -35,13 +37,11 @@ public class Graph<T> {
         //TODO
     }
 
-    public ArrayList<Node<T>> goTroughGraph(){
-        Node<T> first = nodes.get(0);
-        
-    }
-
     public void pathFrom(Node<T> pNodeA, Node<T> pNodeB){
         //TODO
+        ArrayList<Node<T>> path = new ArrayList<>();
+        ArrayList<T> auxiliarQueue
+
     }
 
 }
