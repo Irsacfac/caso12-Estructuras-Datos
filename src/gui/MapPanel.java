@@ -19,14 +19,10 @@ import Grafo.Node;
 import otros.IConstants;
 
 public class MapPanel extends JPanel implements IConstants, MouseListener, ActionListener {
-	private Point currentPoint;
-	private Point lastPoint;
-	private ArrayList<Point> puntos;
+	private Point<Node> currentPoint;
+	private Point<Node> lastPoint;
+	private ArrayList<Point<Node>> puntos;
 	ArrayList<Arco> arcos;
-    private boolean paintCircle;
-    private boolean inRange;
-    private boolean recorrer;
-    //private Image imageBuffer;
     private URL fondo;
     private Image map;
     private Graph miGrafo;
@@ -40,8 +36,16 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 		map = new ImageIcon(fondo).getImage();
 		puntos = new ArrayList<>();
 		arcos = new ArrayList<>();
+		miGrafo = new Graph();
 	}
 	
+	public void recorer() {
+		if(puntos.size() == 0) {
+			return;
+		}
+		miGrafo.pathFrom(puntos.get(0).getElemento(), currentPoint.getElemento());
+		
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -64,26 +68,6 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 			g.drawLine(arcoActual.getPuntoA().getEjeX(), arcoActual.getPuntoA().getEjeY(), arcoActual.getPuntoB().getEjeX(), arcoActual.getPuntoB().getEjeY());
 		}
 		
-		/*if(puntos.size() != 0) {
-			if(inRange){
-					g.drawLine(lastPoint.getEjeX(), lastPoint.getEjeY(), currentPoint.getEjeX(), currentPoint.getEjeY());
-					paintCircle = false;
-					lastPoint = currentPoint;
-					inRange = false;
-					return;
-			}
-			g.drawLine(lastPoint.getEjeX(), lastPoint.getEjeY(), currentPoint.getEjeX(), currentPoint.getEjeY());
-		}
-    	if (paintCircle) {
-			g.fillOval(currentPoint.getEjeX()-MOUSE_ADJUSTMENT, currentPoint.getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
-			lastPoint = currentPoint;
-			puntos.add(currentPoint);
-			paintCircle = false;
-    	}
-    	if(recorrer) {
-    		
-    	}
-    	//g.drawImage(imageBuffer, 0, 0, null);*/
     }
 	
 
@@ -98,19 +82,29 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 				existe = puntoActual.inRange(pEvent.getX(), pEvent.getY());
 				if(existe) {
 					currentPoint = puntoActual;
-					inRange = true;
 					puntos.add(puntoActual);
+					Node miNodo = currentPoint.getElemento();
+					miNodo.addArch(lastPoint.getElemento());
 					arcos.add(new Arco(currentPoint,lastPoint));
 					lastPoint = currentPoint;
 					repaint();
 					return;
 				}
 			}
+			if(!existe) {
+				currentPoint = new Point(pEvent.getX(), pEvent.getY());
+				arcos.add(new Arco(currentPoint,lastPoint));
+				Node nuevoNodo = new Node("A");
+				miGrafo.addNode(nuevoNodo);
+				miGrafo.addArch(nuevoNodo, lastPoint.getElemento());
+				currentPoint.setElemento(nuevoNodo);
+				puntos.add(currentPoint);
+			}
+		}else {
 			currentPoint = new Point(pEvent.getX(), pEvent.getY());
-			arcos.add(new Arco(currentPoint,lastPoint));
-		}
-		if(!existe) {
-			currentPoint = new Point(pEvent.getX(), pEvent.getY());
+			Node nuevoNodo = new Node("A");
+			miGrafo.addNode(nuevoNodo);
+			currentPoint.setElemento(nuevoNodo);
 			puntos.add(currentPoint);
 		}
 		lastPoint = currentPoint;
