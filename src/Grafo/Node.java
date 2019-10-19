@@ -9,21 +9,23 @@ public class Node<T> {
     private ArrayList<Node<T>> arches;
     private Node<T> nextNode;
     private T element;
+    private boolean visitado;
 
     public Node(T pElement) {
 
         element = pElement;
-        arches = new ArrayList<>();
-        nextNode = null;
+        arches = new ArrayList<Node<T>>();
+        visitado = false;
+        //nextNode = null;
     }
 
-    public Node<T> getNextNode() {
+    /*public Node<T> getNextNode() {
         return nextNode;
     }
 
     public void setNextNode(Node<T> nextNode) {
         this.nextNode = nextNode;
-    }
+    }*/
 
     public void addArch(Node<T> pNewArch){
         arches.add(pNewArch);
