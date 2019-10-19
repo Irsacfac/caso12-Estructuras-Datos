@@ -48,6 +48,7 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 			return;
 		}
 		recorrido = miGrafo.pathFrom(puntos.get(0).getElemento(), currentPoint.getElemento());
+		repaint();
 		
 	}
 	
