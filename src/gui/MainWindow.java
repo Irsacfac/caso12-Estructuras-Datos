@@ -53,7 +53,7 @@ public class MainWindow extends JFrame implements IConstants{
 		buttonSimular.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				myMapPanel.setInitRecorido(true);
 			}
 		});
 	}
