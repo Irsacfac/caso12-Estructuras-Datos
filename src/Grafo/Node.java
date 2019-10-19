@@ -9,6 +9,9 @@ public class Node<T> {
     private ArrayList<Node<T>> arches;
     private Node<T> prevNode;
     private boolean visited;
+
+
+
     private T element;
     private boolean visitado;
 
@@ -46,5 +49,13 @@ public class Node<T> {
 
     public void setElement(T element) {
         this.element = element;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 }
