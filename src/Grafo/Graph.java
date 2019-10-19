@@ -1,5 +1,7 @@
 package Grafo;
 
+import java.util.ArrayList;
+
 //This design is implemented with an adyacence list.
 
 import java.util.ArrayList;
@@ -12,13 +14,12 @@ public class Graph<T> {
         nodes = new ArrayList<>();
     }
 
-    public void addNode(T pNewNodeElement){
-        Node<T> newNode = new Node<T>(pNewNodeElement);
-        nodes.add(newNode);
+    public void addNode(T pNewNode){
+    	Node pNodo = new Node<T>(pNewNode);
     }
 
     public void deleteNode(Node<T> pToDelete){
-        //TODO.
+    	nodos.remove(pToDelete);
     }
 
     public void addArch(Node<T> pNodeOne, Node<T> pNodeTwo){

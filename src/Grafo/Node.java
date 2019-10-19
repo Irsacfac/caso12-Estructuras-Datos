@@ -10,6 +10,7 @@ public class Node<T> {
     private Node<T> prevNode;
     private boolean visited;
     private T element;
+    private boolean visitado;
 
     public Node(T pElement) {
 
