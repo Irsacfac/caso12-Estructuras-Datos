@@ -22,11 +22,13 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 	private Point<Node> currentPoint;
 	private Point<Node> lastPoint;
 	private ArrayList<Point<Node>> puntos;
-	ArrayList<Arco> arcos;
+	private ArrayList<Arco> arcos;
+	private ArrayList<Node> recorrido;
     private URL fondo;
     private Image map;
     private Graph miGrafo;
    	private Node nodoAnterior;
+   	private boolean initRecorrido;
 	
 	public MapPanel() {
 		super();
@@ -36,7 +38,9 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 		map = new ImageIcon(fondo).getImage();
 		puntos = new ArrayList<>();
 		arcos = new ArrayList<>();
+		recorrido = new ArrayList<>();
 		miGrafo = new Graph();
+		initRecorrido = false;
 	}
 	
 	public void recorer() {
@@ -82,6 +86,10 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 				existe = puntoActual.inRange(pEvent.getX(), pEvent.getY());
 				if(existe) {
 					currentPoint = puntoActual;
+					if(initRecorrido) {
+						this.recorer();
+						return;
+					}
 					puntos.add(puntoActual);
 					Node miNodo = currentPoint.getElemento();
 					miNodo.addArch(lastPoint.getElemento());
@@ -133,6 +141,9 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void setInitRecorido(boolean pbool) {
+		initRecorrido = pbool;
 	}
 
 }
