@@ -74,11 +74,20 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 		}
 		Node<Point> nodoActual;
 		for(int pos = 0; pos < recorrido.size(); pos++) {
+
+
 			nodoActual = recorrido.get(pos);
+			g.setColor(Color.CYAN);
+			g.fillOval(puntos.get(0).getEjeX()-MOUSE_ADJUSTMENT, puntos.get(0).getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
 			g.setColor(Color.RED);
-			g.fillOval(nodoActual.getElement().getEjeX()-MOUSE_ADJUSTMENT, nodoActual.getElement().getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO+10, RADIO_CIRCULO+10);
+			g.fillOval(nodoActual.getElement().getEjeX()-MOUSE_ADJUSTMENT, nodoActual.getElement().getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		
     }
 	
 
