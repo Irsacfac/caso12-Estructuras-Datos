@@ -47,7 +47,7 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 		if(puntos.size() == 0) {
 			return;
 		}
-		miGrafo.pathFrom(puntos.get(0).getElemento(), currentPoint.getElemento());
+		recorrido = miGrafo.pathFrom(puntos.get(0).getElemento(), currentPoint.getElemento());
 		
 	}
 	
@@ -70,6 +70,12 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 		for (int arco = 0; arco < arcos.size(); arco++) {
 			arcoActual = arcos.get(arco);
 			g.drawLine(arcoActual.getPuntoA().getEjeX(), arcoActual.getPuntoA().getEjeY(), arcoActual.getPuntoB().getEjeX(), arcoActual.getPuntoB().getEjeY());
+		}
+		Node<Point> nodoActual;
+		for(int pos = 0; pos < recorrido.size(); pos++) {
+			nodoActual = recorrido.get(pos);
+			g.setColor(Color.RED);
+			g.fillOval(nodoActual.getElement().getEjeX()-MOUSE_ADJUSTMENT, nodoActual.getElement().getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO+10, RADIO_CIRCULO+10);
 		}
 		
     }
@@ -102,7 +108,7 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 			if(!existe) {
 				currentPoint = new Point(pEvent.getX(), pEvent.getY());
 				arcos.add(new Arco(currentPoint,lastPoint));
-				Node nuevoNodo = new Node("A");
+				Node nuevoNodo = new Node(currentPoint);
 				miGrafo.addNode(nuevoNodo);
 				miGrafo.addArch(nuevoNodo, lastPoint.getElemento());
 				currentPoint.setElemento(nuevoNodo);
@@ -110,7 +116,7 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 			}
 		}else {
 			currentPoint = new Point(pEvent.getX(), pEvent.getY());
-			Node nuevoNodo = new Node("A");
+			Node nuevoNodo = new Node(currentPoint);
 			miGrafo.addNode(nuevoNodo);
 			currentPoint.setElemento(nuevoNodo);
 			puntos.add(currentPoint);
