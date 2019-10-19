@@ -50,6 +50,12 @@ public class MainWindow extends JFrame implements IConstants{
 		this.getContentPane().add(buttonPlace);
 		
 		buttonPlace.add(buttonSimular);
+		buttonSimular.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 	
 }
