@@ -40,8 +40,22 @@ public class Graph<T> {
     public void pathFrom(Node<T> pNodeA, Node<T> pNodeB){
         //TODO
         ArrayList<Node<T>> path = new ArrayList<>();
-        ArrayList<T> auxiliarQueue
+        ArrayList<Node<T>> auxiliarQueue = new ArrayList<>();
+        auxiliarQueue.add(pNodeA);
+
+        Node<T> current = pNodeA;
+        while(current != pNodeB){
+            current = auxiliarQueue.get(0);
+            auxiliarQueue = enqueueArches(current, auxiliarQueue);
+        }
+
 
     }
 
+    public ArrayList<Node<T>> enqueueArches(Node<T> pNode, ArrayList<Node<T>> queue){
+        for (Node<T> arch: pNode.getArches()){
+            queue.add(arch);
+        }
+        return queue;
+    }
 }
