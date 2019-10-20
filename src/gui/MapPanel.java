@@ -82,11 +82,11 @@ public class MapPanel extends JPanel implements IConstants, MouseListener, Actio
 			g.setColor(Color.RED);
 			g.fillOval(nodoActual.getElement().getEjeX()-MOUSE_ADJUSTMENT, nodoActual.getElement().getEjeY()-MOUSE_ADJUSTMENT, RADIO_CIRCULO, RADIO_CIRCULO);
 
-			try {
+			/*try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 		}
     }
 	
